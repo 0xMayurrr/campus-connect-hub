@@ -1,3 +1,4 @@
+import { RoutingService } from '../../backend/routing.service';
 import { TicketCategory, UserRole } from '@/types';
 
 export interface RoutingRule {
@@ -75,5 +76,18 @@ export class DepartmentRoutingService {
     };
 
     return priorityMap[category] || 'medium';
+  }
+
+  // Use backend routing service for enhanced functionality
+  static routeTicketToDepartment(category: string, issueType: string): string {
+    return RoutingService.routeTicketToDepartment(category, issueType);
+  }
+
+  static canUserHandleTicket(userRole: UserRole, ticketDepartment: string): boolean {
+    return RoutingService.canUserHandleTicket(userRole, ticketDepartment);
+  }
+
+  static getEstimatedResolutionTime(department: string, priority: string): number {
+    return RoutingService.getEstimatedResolutionTime(department, priority);
   }
 }
