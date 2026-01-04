@@ -60,7 +60,7 @@ export default function Dashboard() {
         {user?.role === 'student' && (
           <>
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               <StatCard
                 title="My Tickets"
                 value={userTickets.length}
@@ -97,9 +97,9 @@ export default function Dashboard() {
 
             {/* Recent Tickets */}
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>My Recent Tickets</CardTitle>
-                <Button variant="outline" size="sm" onClick={() => navigate('/tickets')}>
+              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <CardTitle className="text-lg md:text-xl">My Recent Tickets</CardTitle>
+                <Button variant="outline" size="sm" onClick={() => navigate('/tickets')} className="w-full sm:w-auto">
                   View All
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -107,7 +107,7 @@ export default function Dashboard() {
               <CardContent>
                 <Card className="border-2 border-dashed">
                   <CardHeader>
-                    <CardTitle className="text-lg">My Tickets</CardTitle>
+                    <CardTitle className="text-base md:text-lg">My Tickets</CardTitle>
                     <p className="text-sm text-muted">
                       {recentTickets.length > 0 ? `${recentTickets.length} tickets` : 'No Tickets'}
                     </p>

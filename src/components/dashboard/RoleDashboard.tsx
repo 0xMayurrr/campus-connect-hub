@@ -69,23 +69,23 @@ export function RoleDashboard({ className }: RoleDashboardProps) {
   };
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`space-y-4 sm:space-y-6 ${className}`}>
       {/* Role-specific Insights */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {insights.map((insight, index) => (
           <Card key={index}>
-            <CardContent className="p-4">
-              <div className={`w-12 h-12 rounded-lg ${getInsightColor(insight.color)} flex items-center justify-center mb-3`}>
-                <span className="text-lg font-bold">{insight.value}</span>
+            <CardContent className="p-3 sm:p-4">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg ${getInsightColor(insight.color)} flex items-center justify-center mb-2 sm:mb-3`}>
+                <span className="text-base sm:text-lg font-bold">{insight.value}</span>
               </div>
-              <p className="text-sm font-medium text-foreground">{insight.label}</p>
+              <p className="text-xs sm:text-sm font-medium text-foreground leading-tight">{insight.label}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
       {/* Role-specific Modules */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {modules.map((module) => {
           const IconComponent = getIconComponent(module.icon);
           
@@ -95,24 +95,24 @@ export function RoleDashboard({ className }: RoleDashboardProps) {
               className="cursor-pointer hover:shadow-lg transition-shadow border-2 hover:border-primary/20"
               onClick={() => handleModuleClick(module)}
             >
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <IconComponent className="w-6 h-6 text-primary" />
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-start justify-between mb-3 sm:mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 sm:gap-2 flex-wrap">
                     {module.count !== undefined && (
-                      <Badge variant="secondary">{module.count}</Badge>
+                      <Badge variant="secondary" className="text-xs">{module.count}</Badge>
                     )}
                     {module.priority && (
-                      <Badge variant={getPriorityColor(module.priority)}>
+                      <Badge variant={getPriorityColor(module.priority)} className="text-xs">
                         {module.priority}
                       </Badge>
                     )}
                   </div>
                 </div>
-                <h3 className="font-semibold mb-1">{module.title}</h3>
-                <p className="text-sm text-muted-foreground">{module.description}</p>
+                <h3 className="font-semibold mb-1 text-sm sm:text-base leading-tight">{module.title}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-tight">{module.description}</p>
               </CardContent>
             </Card>
           );
@@ -122,18 +122,18 @@ export function RoleDashboard({ className }: RoleDashboardProps) {
       {/* Role-specific Quick Actions */}
       {user.role === 'student' && (
         <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+          <CardHeader className="pb-3 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              <Button onClick={() => navigate('/submit')} size="sm">
+          <CardContent className="pt-0">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button onClick={() => navigate('/submit')} size="sm" className="w-full sm:w-auto">
                 Submit New Request
               </Button>
-              <Button onClick={() => navigate('/ai-teacher')} variant="outline" size="sm">
+              <Button onClick={() => navigate('/ai-teacher')} variant="outline" size="sm" className="w-full sm:w-auto">
                 Ask AI Teacher
               </Button>
-              <Button onClick={() => navigate('/navigate')} variant="outline" size="sm">
+              <Button onClick={() => navigate('/navigate')} variant="outline" size="sm" className="w-full sm:w-auto">
                 Scan QR Code
               </Button>
             </div>
@@ -143,20 +143,20 @@ export function RoleDashboard({ className }: RoleDashboardProps) {
 
       {(user.role === 'teaching_staff' || user.role === 'tutor') && (
         <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+          <CardHeader className="pb-3 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              <Button onClick={() => navigate('/tickets')} size="sm">
+          <CardContent className="pt-0">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button onClick={() => navigate('/tickets')} size="sm" className="w-full sm:w-auto">
                 Review Student Queries
               </Button>
               {user.role === 'teaching_staff' && (
                 <>
-                  <Button onClick={() => navigate('/syllabus')} variant="outline" size="sm">
+                  <Button onClick={() => navigate('/syllabus')} variant="outline" size="sm" className="w-full sm:w-auto">
                     Upload Syllabus
                   </Button>
-                  <Button onClick={() => navigate('/manage-lectures')} variant="outline" size="sm">
+                  <Button onClick={() => navigate('/manage-lectures')} variant="outline" size="sm" className="w-full sm:w-auto">
                     Upload Lecture
                   </Button>
                 </>
@@ -168,19 +168,19 @@ export function RoleDashboard({ className }: RoleDashboardProps) {
 
       {(user.role === 'admin' || user.role === 'hod') && (
         <Card>
-          <CardHeader>
-            <CardTitle>Management Actions</CardTitle>
+          <CardHeader className="pb-3 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Management Actions</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              <Button onClick={() => navigate('/tickets')} size="sm">
+          <CardContent className="pt-0">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button onClick={() => navigate('/tickets')} size="sm" className="w-full sm:w-auto">
                 Review All Tickets
               </Button>
-              <Button onClick={() => navigate('/notices')} variant="outline" size="sm">
+              <Button onClick={() => navigate('/notices')} variant="outline" size="sm" className="w-full sm:w-auto">
                 Publish Notice
               </Button>
               {user.role === 'admin' && (
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto">
                   Manage Users
                 </Button>
               )}

@@ -153,26 +153,31 @@ export default function Auth() {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-background">
         <div className="w-full max-w-md">
+          {/* Mobile Logo - Only show on mobile */}
+          <div className="lg:hidden flex items-center justify-center mb-6">
+            <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy" className="w-16 h-16" />
+          </div>
+
           {/* Greeting */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Hello!</h1>
-            <p className="text-2xl font-semibold text-foreground">Good Morning</p>
-            <p className="text-muted-foreground mt-4">Login your account</p>
+          <div className="mb-6 lg:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Hello!</h1>
+            <p className="text-xl sm:text-2xl font-semibold text-foreground">Good Morning</p>
+            <p className="text-muted-foreground mt-3 lg:mt-4">Login your account</p>
           </div>
 
           {/* Login Form */}
           <Card className="border-0 shadow-none">
             <CardContent className="p-0">
               <Tabs value={tab} onValueChange={setTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsList className="grid w-full grid-cols-2 mb-4 lg:mb-6">
                   <TabsTrigger value="login">Login</TabsTrigger>
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="login">
-                  <form onSubmit={handleLogin} className="space-y-6">
+                  <form onSubmit={handleLogin} className="space-y-4 lg:space-y-6">
                     <div className="space-y-2">
                       <Label htmlFor="login-email" className="text-muted-foreground">Username</Label>
                       <Input
@@ -181,7 +186,7 @@ export default function Auth() {
                         placeholder="Enter your email"
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
-                        className="h-12 border-border/50 focus:border-primary"
+                        className="h-11 lg:h-12 border-border/50 focus:border-primary"
                       />
                     </div>
 
@@ -193,14 +198,14 @@ export default function Auth() {
                         placeholder="Enter your password"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
-                        className="h-12 border-border/50 focus:border-primary"
+                        className="h-11 lg:h-12 border-border/50 focus:border-primary"
                       />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="login-role" className="text-muted-foreground">Role</Label>
                       <Select value={loginRole} onValueChange={(v) => setLoginRole(v as UserRole)}>
-                        <SelectTrigger className="h-12 border-border/50 focus:border-primary">
+                        <SelectTrigger className="h-11 lg:h-12 border-border/50 focus:border-primary">
                           <SelectValue placeholder="Select your role" />
                         </SelectTrigger>
                         <SelectContent>
@@ -221,7 +226,7 @@ export default function Auth() {
 
                     <Button 
                       type="submit" 
-                      className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" 
+                      className="w-full h-11 lg:h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" 
                       disabled={isLoading}
                     >
                       {isLoading ? (
@@ -349,7 +354,7 @@ export default function Auth() {
           </Card>
 
           {/* Back to Home */}
-          <div className="mt-8 text-center">
+          <div className="mt-6 lg:mt-8 text-center">
             <button 
               onClick={() => navigate('/')}
               className="text-sm text-muted-foreground hover:text-primary"
