@@ -4,93 +4,98 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { GraduationCap, Send, Bot, User, BookOpen, Sparkles } from 'lucide-react';
-import { SyllabusService } from '@/services/syllabusService';
-import { AITeacherService } from '@/services/aiTeacherService';
-import { useAuth } from '@/contexts/AuthContext';
+import { Badge } from '@/components/ui/badge';
+import { CampusAIService, AIResponse } from '@/services/campusAIService';
+import { Bot, Send, User, HelpCircle, MapPin, Phone, Building } from 'lucide-react';
 
-interface Message {
+interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  type?: 'info' | 'routing' | 'faq' | 'facility';
+  suggestedActions?: string[];
   timestamp: Date;
 }
 
-const suggestedQuestions = [
-  "Hey! How are you doing today?",
-  "I'm feeling stressed about my exams",
-  "Can you motivate me to study?",
-  "What topics are covered in Data Structures?",
-  "Explain the concept of polymorphism in OOP",
-  "I need help understanding algorithms",
-];
-
-export default function AITeacher() {
-  const { user } = useAuth();
-  const [messages, setMessages] = useState<Message[]>([
+export default function CampusAIAssistant() {
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: '1',
       role: 'assistant',
-      content: "Hey there! 😊 I'm your friendly AI Teacher assistant! I'm here to help you with your coursework and provide support whenever you need it.\n\nI can:\n📚 Answer questions based on your syllabus materials\n💬 Chat and provide study motivation\n🎯 Explain concepts in a friendly, easy way\n\nFeel free to ask me anything academic or just say hi if you want to chat! How are you doing today?",
+      content: "Hello! I'm your Campus AI Assistant. I can help you with:\n• Department locations and contacts\n• Campus facility information\n• Procedure guidance\n• Emergency contacts\n\nHow can I assist you today?",
+      type: 'info',
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const quickQuestions = [
+    "Where is the library?",
+    "How do I submit a complaint?",
+    "Computer Science department contact",
+    "Emergency contacts",
+    "Hostel information",
+    "Transport schedules"
+  ];
+
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const userMessage: Message = {
+    const userMessage: ChatMessage = {
       id: crypto.randomUUID(),
       role: 'user',
       content: input,
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
-    const currentInput = input;
+    setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
-    // Use enhanced AI Teacher service
-    setTimeout(async () => {
-      const response = await AITeacherService.processQuery(currentInput, {
-        department: user?.department,
-        semester: '3rd Semester' // Could be dynamic based on user profile
-      });
+    // Process with Campus AI Service
+    setTimeout(() => {
+      const response: AIResponse = CampusAIService.processQuery(input);
       
-      const aiResponse: Message = {
+      const aiMessage: ChatMessage = {
         id: crypto.randomUUID(),
         role: 'assistant',
         content: response.message,
+        type: response.type,
+        suggestedActions: response.suggestedActions,
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, aiResponse]);
+
+      setMessages(prev => [...prev, aiMessage]);
       setIsLoading(false);
-    }, 1200);
+    }, 800);
   };
 
-  const handleSuggestedQuestion = (question: string) => {
+  const handleQuickQuestion = (question: string) => {
     setInput(question);
+  };
+
+  const handleSuggestedAction = (action: string) => {
+    // Handle suggested actions
+    console.log('Suggested action:', action);
   };
 
   return (
     <DashboardLayout
-      title="AI Teacher"
-      subtitle="Get syllabus-aware answers to your academic questions"
+      title="Campus AI Assistant"
+      subtitle="Get instant help with campus information and procedures"
     >
       <div className="grid lg:grid-cols-3 gap-6 h-[calc(100vh-12rem)]">
         {/* Chat Section */}
         <Card className="lg:col-span-2 flex flex-col">
           <CardHeader className="border-b">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-3">
-                <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy" className="w-10 h-10" />
+              <div className="p-2 rounded-lg bg-primary">
+                <Bot className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <CardTitle>AI Teacher Chat</CardTitle>
-                <CardDescription>Your friendly, syllabus-aware learning companion</CardDescription>
+                <CardTitle>Campus AI Assistant</CardTitle>
+                <CardDescription>Rule-based campus information system</CardDescription>
               </div>
             </div>
           </CardHeader>
@@ -115,6 +120,23 @@ export default function AITeacher() {
                     }`}
                   >
                     <p className="whitespace-pre-wrap">{message.content}</p>
+                    
+                    {message.suggestedActions && message.suggestedActions.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {message.suggestedActions.map((action, index) => (
+                          <Button
+                            key={index}
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleSuggestedAction(action)}
+                            className="text-xs"
+                          >
+                            {action}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                    
                     <p className={`text-xs mt-2 ${message.role === 'user' ? 'text-primary-foreground/70' : 'text-muted'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
@@ -146,7 +168,7 @@ export default function AITeacher() {
           <div className="p-4 border-t">
             <div className="flex gap-2">
               <Input
-                placeholder="Ask me anything academic or just say hi! 😊"
+                placeholder="Ask about campus facilities, departments, or procedures..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -160,21 +182,21 @@ export default function AITeacher() {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          {/* Suggested Questions */}
+          {/* Quick Questions */}
           <Card>
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                Try These!
+                <HelpCircle className="w-4 h-4 text-primary" />
+                Quick Questions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {suggestedQuestions.map((question, index) => (
+              {quickQuestions.map((question, index) => (
                 <Button
                   key={index}
                   variant="ghost"
                   className="w-full justify-start text-left h-auto py-3 px-4"
-                  onClick={() => handleSuggestedQuestion(question)}
+                  onClick={() => handleQuickQuestion(question)}
                 >
                   <span className="line-clamp-2">{question}</span>
                 </Button>
@@ -182,23 +204,45 @@ export default function AITeacher() {
             </CardContent>
           </Card>
 
-          {/* Available Subjects */}
+          {/* Emergency Contacts */}
           <Card>
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-primary" />
-                Available Subjects
+                <Phone className="w-4 h-4 text-primary" />
+                Emergency Contacts
               </CardTitle>
-              <CardDescription>Syllabus materials loaded</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {SyllabusService.getAvailableSubjects().map((subject) => (
-                  <div key={subject} className="flex items-center gap-2 p-2 rounded bg-muted/50">
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                    <span className="text-sm">{subject}</span>
+                {[
+                  { label: 'Security', number: '100' },
+                  { label: 'Medical', number: '102' },
+                  { label: 'Admin Office', number: '0422-123456' },
+                  { label: 'Hostel Warden', number: '0422-123457' }
+                ].map((contact) => (
+                  <div key={contact.label} className="flex items-center justify-between p-2 rounded bg-muted/50">
+                    <span className="text-sm font-medium">{contact.label}</span>
+                    <Badge variant="outline">{contact.number}</Badge>
                   </div>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Campus Info */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <Building className="w-4 h-4 text-primary" />
+                Campus Info
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2 text-sm">
+                <p><strong>Library Hours:</strong> 8 AM - 8 PM</p>
+                <p><strong>Cafeteria:</strong> 7 AM - 9 PM</p>
+                <p><strong>Admin Office:</strong> 9 AM - 5 PM</p>
+                <p><strong>Transport:</strong> 6 AM - 10 PM</p>
               </div>
             </CardContent>
           </Card>

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { TicketProvider } from "@/contexts/TicketContext";
 import Landing from "./pages/Landing";
+import ModernLanding from "./pages/ModernLanding";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import SubmitRequest from "./pages/SubmitRequest";
@@ -16,6 +17,9 @@ import AITeacher from "./pages/AITeacher";
 import Lectures from "./pages/Lectures";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import CampusAIAssistant from "./pages/CampusAIAssistant";
+import SyllabusManagement from "./pages/SyllabusManagement";
+import ManageLectures from "./pages/ManageLectures";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +42,7 @@ function AppRoutes() {
   
   return (
     <Routes>
-      <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Landing />} />
+      <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <ModernLanding />} />
       <Route path="/auth" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Auth />} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/submit" element={<ProtectedRoute><SubmitRequest /></ProtectedRoute>} />
@@ -47,6 +51,9 @@ function AppRoutes() {
       <Route path="/notices" element={<ProtectedRoute><Notices /></ProtectedRoute>} />
       <Route path="/ai-teacher" element={<ProtectedRoute><AITeacher /></ProtectedRoute>} />
       <Route path="/lectures" element={<ProtectedRoute><Lectures /></ProtectedRoute>} />
+      <Route path="/ai-assistant" element={<ProtectedRoute><CampusAIAssistant /></ProtectedRoute>} />
+      <Route path="/syllabus" element={<ProtectedRoute><SyllabusManagement /></ProtectedRoute>} />
+      <Route path="/manage-lectures" element={<ProtectedRoute><ManageLectures /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>

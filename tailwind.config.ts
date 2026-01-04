@@ -14,49 +14,88 @@ export default {
   	},
   	extend: {
   		colors: {
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+  			// Campus Aid Buddy Global Color Palette - Orange, Black, #74aa95
+  			border: '#b8d4c7',
+  			input: '#b8d4c7',
+  			ring: '#ff8000',
+  			background: '#fefefe',
+  			foreground: '#000000',
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				50: '#fff7ed',
+  				100: '#ffedd5',
+  				200: '#fed7aa',
+  				300: '#fdba74',
+  				400: '#fb923c',
+  				500: '#ff8000',
+  				600: '#ea580c',
+  				700: '#c2410c',
+  				800: '#9a3412',
+  				900: '#7c2d12',
+  				950: '#000000',
+  				DEFAULT: '#ff8000',
+  				foreground: '#ffffff'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				50: '#f0f9f6',
+  				100: '#dcf2ea',
+  				200: '#bce5d6',
+  				300: '#8dd1b8',
+  				400: '#5eb899',
+  				500: '#74aa95',
+  				600: '#5d8a77',
+  				700: '#4a6e5f',
+  				800: '#3d5850',
+  				900: '#344943',
+  				950: '#1c2925',
+  				DEFAULT: '#74aa95',
+  				foreground: '#ffffff'
   			},
   			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
+  				DEFAULT: '#dc2626',
+  				foreground: '#ffffff'
   			},
   			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+  				DEFAULT: '#d4e8dd',
+  				foreground: '#000000'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				50: '#fff7ed',
+  				100: '#ffedd5',
+  				200: '#fed7aa',
+  				300: '#fdba74',
+  				400: '#fb923c',
+  				500: '#ff8000',
+  				600: '#ea580c',
+  				700: '#c2410c',
+  				800: '#9a3412',
+  				900: '#7c2d12',
+  				950: '#431407',
+  				DEFAULT: '#ff8000',
+  				foreground: '#000000'
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
+  				DEFAULT: '#fefefe',
+  				foreground: '#000000'
   			},
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+  				DEFAULT: '#ffffff',
+  				foreground: '#000000'
   			},
   			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  				DEFAULT: '#ffffff',
+  				foreground: '#000000',
+  				primary: '#ff8000',
+  				'primary-foreground': '#ffffff',
+  				accent: '#74aa95',
+  				'accent-foreground': '#ffffff',
+  				border: '#b8d4c7',
+  				ring: '#ff8000'
+  			},
+  			// Additional semantic colors
+  			success: '#74aa95',
+  			warning: '#ff8000',
+  			error: '#dc2626',
+  			info: '#74aa95'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

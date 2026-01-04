@@ -32,7 +32,7 @@ export function StatCard({
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="space-y-2">
-            <p className="text-sm font-medium text-muted">{title}</p>
+            <p className="text-sm font-medium text-muted-foreground">{title}</p>
             <p className="text-3xl font-bold text-foreground">{value}</p>
             {subtitle && (
               <p className="text-sm text-primary">{subtitle}</p>

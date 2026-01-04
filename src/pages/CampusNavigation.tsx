@@ -7,10 +7,13 @@ import { useGeolocation } from '@/hooks/useGeolocation';
 import { campusLocations } from '@/data/campusLocations';
 import { CampusLocation } from '@/types';
 import { MapPin, Navigation, ExternalLink, QrCode, Loader2 } from 'lucide-react';
+import { QRScanner } from '@/components/qr/QRScanner';
+import { QRCodeService, QRCodeData } from '@/services/qrCodeService';
 
 export default function Navigate() {
   const { location, isLoading: locationLoading, getLocation } = useGeolocation();
   const [selectedLocation, setSelectedLocation] = useState<CampusLocation | null>(null);
+  const [showQRScanner, setShowQRScanner] = useState(false);
 
   useEffect(() => {
     getLocation();
@@ -49,6 +52,14 @@ export default function Navigate() {
   const openGoogleMaps = (campusLoc: CampusLocation) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${campusLoc.latitude},${campusLoc.longitude}`;
     window.open(url, '_blank');
+  };
+
+  const handleQRScan = (qrData: QRCodeData) => {
+    const scannedLocation = campusLocations.find(loc => loc.id === qrData.locationId);
+    if (scannedLocation) {
+      setSelectedLocation(scannedLocation);
+      setShowQRScanner(false);
+    }
   };
 
   const locationsByType = {
@@ -119,9 +130,13 @@ export default function Navigate() {
                 <Navigation className="w-4 h-4 mr-2" />
                 View My Location
               </Button>
-              <Button variant="outline" className="w-full bg-accent hover:bg-accent/80 text-accent-foreground">
-                <MapPin className="w-4 h-4 mr-2" />
-                Nearest Location
+              <Button 
+                variant="outline" 
+                onClick={() => setShowQRScanner(true)}
+                className="w-full bg-accent hover:bg-accent/80 text-accent-foreground"
+              >
+                <QrCode className="w-4 h-4 mr-2" />
+                Scan QR Code
               </Button>
             </div>
           </CardContent>
@@ -160,27 +175,47 @@ export default function Navigate() {
           </CardContent>
         </Card>
 
-        {/* QR Code Scanner Placeholder */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <QrCode className="w-5 h-5" />
-              QR Code Navigation
-            </CardTitle>
-            <CardDescription>
-              Scan QR codes placed around campus to get instant navigation and location info
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8 bg-muted/50 rounded-lg border-2 border-dashed border-border">
-              <QrCode className="w-16 h-16 mx-auto text-muted mb-4" />
-              <p className="text-muted mb-4">Point your camera at a campus QR code</p>
-              <Button variant="outline">
-                Open Scanner
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        {/* QR Code Scanner */}
+        {showQRScanner ? (
+          <QRScanner 
+            onScan={handleQRScan}
+            onClose={() => setShowQRScanner(false)}
+          />
+        ) : (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <QrCode className="w-5 h-5" />
+                QR Code Navigation
+              </CardTitle>
+              <CardDescription>
+                Scan QR codes placed around campus to get instant navigation and location info
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-8 bg-muted/50 rounded-lg border-2 border-dashed border-border">
+                <QrCode className="w-16 h-16 mx-auto text-muted mb-4" />
+                <p className="text-muted mb-4">Point your camera at a campus QR code</p>
+                <Button variant="outline" onClick={() => setShowQRScanner(true)}>
+                  Open Scanner
+                </Button>
+              </div>
+              {selectedLocation && (
+                <div className="mt-4 p-4 bg-primary/10 rounded-lg">
+                  <h4 className="font-medium text-primary">Scanned Location: {selectedLocation.name}</h4>
+                  <p className="text-sm text-muted">{selectedLocation.description}</p>
+                  <Button 
+                    size="sm" 
+                    className="mt-2"
+                    onClick={() => openGoogleMaps(selectedLocation)}
+                  >
+                    Get Directions
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
     </DashboardLayout>
   );

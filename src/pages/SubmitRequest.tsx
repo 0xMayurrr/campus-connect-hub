@@ -13,6 +13,7 @@ import { useGeolocation } from '@/hooks/useGeolocation';
 import { useToast } from '@/hooks/use-toast';
 import { TicketCategory } from '@/types';
 import { departments, ticketCategories } from '@/data/campusLocations';
+import { DepartmentRoutingService } from '@/services/departmentRoutingService';
 import { MapPin, Upload, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function SubmitRequest() {
@@ -49,17 +50,21 @@ export default function SubmitRequest() {
     }
 
     try {
+      const routing = DepartmentRoutingService.getRouting(formData.category as TicketCategory, formData.department);
+      const priority = DepartmentRoutingService.getPriorityByCategory(formData.category as TicketCategory);
+      
       const ticket = await createTicket({
         title: `${ticketCategories.find(c => c.id === formData.category)?.label} - ${formData.department}`,
         description: formData.description,
         category: formData.category as TicketCategory,
-        department: formData.department,
+        department: routing.department,
+        priority: priority,
         location: location || undefined,
       });
 
       toast({
         title: 'Request submitted!',
-        description: `Your ticket #${ticket.ticketNumber} has been created.`,
+        description: `Your ticket #${ticket.ticketNumber} has been routed to ${routing.department} department.`,
       });
 
       navigate('/tickets');

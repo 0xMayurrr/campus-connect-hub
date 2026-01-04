@@ -69,12 +69,10 @@ export function DashboardSidebar({ className }: SidebarProps) {
       {/* Logo & Role */}
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-primary-foreground" />
-          </div>
+          <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy" className="w-12 h-12" />
           <div>
-            <h2 className="font-semibold text-sidebar-foreground">Campus Aid</h2>
-            <p className="text-xs text-muted">{roleLabel} Portal</p>
+            <h2 className="font-semibold text-sidebar-foreground">Campus Aid Buddy</h2>
+            <p className="text-xs text-muted-foreground">{roleLabel} Portal</p>
           </div>
         </div>
       </div>
@@ -108,7 +106,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium truncate text-sidebar-foreground">{user?.name}</p>
-            <p className="text-xs text-muted truncate">{user?.email}</p>
+            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
           </div>
         </div>
         <Button

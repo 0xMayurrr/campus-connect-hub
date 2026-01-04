@@ -42,14 +42,14 @@ export function DashboardLayout({ children, title, subtitle }: DashboardLayoutPr
 
             <div>
               {title && <h1 className="text-xl font-semibold text-foreground">{title}</h1>}
-              {subtitle && <p className="text-sm text-muted">{subtitle}</p>}
+              {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             {/* Search */}
             <div className="hidden md:flex items-center gap-2 bg-background rounded-lg px-3 py-2 border border-border">
-              <Search className="w-4 h-4 text-muted" />
+              <Search className="w-4 h-4 text-muted-foreground" />
               <Input 
                 placeholder="Search your tickets..." 
                 className="border-0 bg-transparent h-6 w-48 focus-visible:ring-0 px-0"

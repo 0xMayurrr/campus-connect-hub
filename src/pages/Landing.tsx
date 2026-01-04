@@ -34,8 +34,8 @@ export default function Landing() {
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <GraduationCap className="w-6 h-6 text-primary-foreground" />
+            <div className="flex items-center gap-3">
+              <img src="/Campus_Aid_Buddyy_Logo_with_Open_Hand_Icon-removebg-preview.png" alt="Campus Aid Buddy" className="w-10 h-10" />
             </div>
             <span className="font-bold text-xl text-foreground">Campus Aid Buddy</span>
           </div>
@@ -51,14 +51,14 @@ export default function Landing() {
           {/* Left Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <p className="text-sm font-medium text-muted border-b border-border pb-2 inline-block">
+              <p className="text-sm font-medium text-secondary border-b border-border pb-2 inline-block">
                 Smart Campus Platform
               </p>
               <h1 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
                 Campus support,{' '}
                 <span className="text-primary">simplified</span>
               </h1>
-              <p className="text-lg text-muted max-w-lg">
+              <p className="text-lg text-muted-foreground max-w-lg">
                 Submit requests, track tickets, and navigate campus with our streamlined platform built for students and administrators.
               </p>
             </div>
@@ -70,7 +70,7 @@ export default function Landing() {
                   {features.map((feature, index) => (
                     <div key={index} className="text-center lg:text-left">
                       <p className="text-2xl lg:text-3xl font-bold text-foreground">{feature.title}</p>
-                      <p className="text-sm text-muted">{feature.subtitle}</p>
+                      <p className="text-sm text-muted-foreground">{feature.subtitle}</p>
                     </div>
                   ))}
                 </div>
@@ -99,9 +99,9 @@ export default function Landing() {
                         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
                           {action.label}
                         </h3>
-                        <p className="text-sm text-muted">{action.description}</p>
+                        <p className="text-sm text-muted-foreground">{action.description}</p>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-muted group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0" />
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0" />
                     </div>
                   </CardContent>
                 </Card>
@@ -116,7 +116,7 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Everything you need</h2>
-            <p className="text-muted max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               A complete campus support ecosystem designed to make your academic life easier.
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function Landing() {
                 <Ticket className="w-8 h-8 text-primary" />
               </div>
               <h3 className="font-semibold text-xl text-foreground">Smart Ticketing</h3>
-              <p className="text-muted">
+              <p className="text-muted-foreground">
                 Submit complaints, requests, and issues with automatic routing to the right department.
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function Landing() {
                 <GraduationCap className="w-8 h-8 text-primary" />
               </div>
               <h3 className="font-semibold text-xl text-foreground">AI Teacher</h3>
-              <p className="text-muted">
+              <p className="text-muted-foreground">
                 Get syllabus-aware answers to your academic questions from our intelligent assistant.
               </p>
             </div>
@@ -147,7 +147,7 @@ export default function Landing() {
                 <MapPin className="w-8 h-8 text-primary" />
               </div>
               <h3 className="font-semibold text-xl text-foreground">QR Navigation</h3>
-              <p className="text-muted">
+              <p className="text-muted-foreground">
                 Scan QR codes to navigate campus buildings and get directions instantly.
               </p>
             </div>
@@ -157,7 +157,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="py-8 border-t border-border">
-        <div className="container mx-auto px-4 text-center text-muted text-sm">
+        <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
           <p>© 2024 Campus Aid Buddy. Built for better campus experiences.</p>
         </div>
       </footer>
