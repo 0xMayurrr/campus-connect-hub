@@ -22,15 +22,15 @@ export function DashboardLayout({ children, title, subtitle }: DashboardLayoutPr
   return (
     <div className="flex h-screen bg-background">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block w-64 xl:w-72">
         <DashboardSidebar />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         {/* Header */}
-        <header className="h-14 sm:h-16 border-b border-border bg-card px-3 sm:px-4 lg:px-8 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+        <header className="h-16 lg:h-18 border-b border-border bg-card px-4 lg:px-6 xl:px-8 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3 lg:gap-4 min-w-0 flex-1">
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -44,34 +44,34 @@ export function DashboardLayout({ children, title, subtitle }: DashboardLayoutPr
             </Sheet>
 
             <div className="min-w-0 flex-1">
-              {title && <h1 className="text-lg sm:text-xl font-semibold text-foreground truncate">{title}</h1>}
-              {subtitle && <p className="text-xs sm:text-sm text-muted-foreground truncate hidden sm:block">{subtitle}</p>}
+              {title && <h1 className="text-xl lg:text-2xl font-semibold text-foreground truncate">{title}</h1>}
+              {subtitle && <p className="text-sm lg:text-base text-muted-foreground truncate hidden sm:block mt-1">{subtitle}</p>}
             </div>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
-            {/* Search - Hidden on mobile */}
-            <div className="hidden md:flex items-center gap-2 bg-background rounded-lg px-3 py-2 border border-border">
-              <Search className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-2 lg:gap-4 shrink-0">
+            {/* Search - Desktop */}
+            <div className="hidden lg:flex items-center gap-2 bg-background rounded-lg px-4 py-2 border border-border min-w-0">
+              <Search className="w-4 h-4 text-muted-foreground shrink-0" />
               <Input 
-                placeholder="Search your tickets..." 
-                className="border-0 bg-transparent h-6 w-48 focus-visible:ring-0 px-0"
+                placeholder="Search tickets, users, or content..." 
+                className="border-0 bg-transparent h-6 w-64 xl:w-80 focus-visible:ring-0 px-0 text-sm"
               />
             </div>
 
             {/* Mobile Search Button */}
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button variant="ghost" size="icon" className="lg:hidden">
               <Search className="w-4 h-4" />
             </Button>
 
             {/* Notifications */}
             <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Bell className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
             </Button>
 
             {/* User Avatar */}
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium text-sm">
+            <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium text-sm lg:text-base">
               {user?.name?.charAt(0) || 'U'}
             </div>
           </div>
@@ -79,10 +79,13 @@ export function DashboardLayout({ children, title, subtitle }: DashboardLayoutPr
 
         {/* Page Content */}
         <main className={cn(
-          "flex-1 overflow-y-auto p-3 sm:p-4 lg:p-8",
+          "flex-1 overflow-y-auto",
+          "p-4 lg:p-6 xl:p-8",
           isMobile && "pb-20" // Add bottom padding for mobile nav
         )}>
-          {children}
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
 

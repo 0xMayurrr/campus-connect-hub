@@ -28,26 +28,26 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <Card className={cn("hover:shadow-md transition-shadow", className)}>
-      <CardContent className="p-3 sm:p-4 md:p-6">
+    <Card className={cn("hover:shadow-lg transition-all duration-200 border-0 shadow-sm", className)}>
+      <CardContent className="p-4 lg:p-6">
         <div className="flex items-start justify-between">
-          <div className="space-y-1 sm:space-y-2 min-w-0 flex-1">
-            <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{title}</p>
-            <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{value}</p>
+          <div className="space-y-2 min-w-0 flex-1">
+            <p className="text-sm lg:text-base font-medium text-muted-foreground truncate">{title}</p>
+            <p className="text-2xl lg:text-3xl xl:text-4xl font-bold text-foreground">{value}</p>
             {subtitle && (
-              <p className="text-xs sm:text-sm text-primary truncate">{subtitle}</p>
+              <p className="text-sm lg:text-base text-primary truncate font-medium">{subtitle}</p>
             )}
             {trend && (
               <p className={cn(
-                "text-xs sm:text-sm font-medium",
+                "text-sm lg:text-base font-medium",
                 trend.isPositive ? "text-green-600" : "text-destructive"
               )}>
                 {trend.isPositive ? '+' : ''}{trend.value}% from last week
               </p>
             )}
           </div>
-          <div className={cn("p-2 sm:p-3 rounded-lg shrink-0 ml-2", iconBgColor)}>
-            <Icon className={cn("w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6", iconColor)} />
+          <div className={cn("p-3 lg:p-4 rounded-xl shrink-0 ml-3", iconBgColor)}>
+            <Icon className={cn("w-6 h-6 lg:w-8 lg:h-8", iconColor)} />
           </div>
         </div>
       </CardContent>

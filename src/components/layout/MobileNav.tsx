@@ -46,6 +46,7 @@ export function MobileBottomNav() {
   const { user } = useAuth();
   const isMobile = useIsMobile();
 
+  // Only show on mobile devices
   if (!isMobile) return null;
 
   const navItems = user?.role === 'admin' 
@@ -55,8 +56,8 @@ export function MobileBottomNav() {
       : staffNavItems;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50 safe-area-bottom">
-      <div className="flex items-center justify-around px-2 py-2">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-sm border-t border-border z-50">
+      <div className="flex items-center justify-around px-1 py-2 safe-area-bottom">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -66,12 +67,14 @@ export function MobileBottomNav() {
               size="sm"
               onClick={() => navigate(item.path)}
               className={cn(
-                "flex flex-col items-center gap-1 h-auto py-2 px-3 min-w-0 flex-1",
-                isActive && "text-primary bg-primary/10"
+                "flex flex-col items-center gap-1 h-auto py-2 px-2 min-w-0 flex-1 rounded-lg",
+                isActive 
+                  ? "text-primary bg-primary/15 font-medium" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
               )}
             >
               <item.icon className="w-5 h-5 shrink-0" />
-              <span className="text-xs truncate">{item.label}</span>
+              <span className="text-xs truncate font-medium">{item.label}</span>
             </Button>
           );
         })}

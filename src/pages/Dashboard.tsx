@@ -60,7 +60,7 @@ export default function Dashboard() {
         {user?.role === 'student' && (
           <>
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
               <StatCard
                 title="My Tickets"
                 value={userTickets.length}
@@ -96,30 +96,38 @@ export default function Dashboard() {
             </div>
 
             {/* Recent Tickets */}
-            <Card>
-              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <CardTitle className="text-lg md:text-xl">My Recent Tickets</CardTitle>
-                <Button variant="outline" size="sm" onClick={() => navigate('/tickets')} className="w-full sm:w-auto">
-                  View All
+            <Card className="shadow-sm">
+              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4">
+                <div>
+                  <CardTitle className="text-xl lg:text-2xl">My Recent Tickets</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">Track your latest support requests</p>
+                </div>
+                <Button variant="outline" onClick={() => navigate('/tickets')} className="w-full sm:w-auto">
+                  View All Tickets
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </CardHeader>
               <CardContent>
-                <Card className="border-2 border-dashed">
-                  <CardHeader>
-                    <CardTitle className="text-base md:text-lg">My Tickets</CardTitle>
-                    <p className="text-sm text-muted">
-                      {recentTickets.length > 0 ? `${recentTickets.length} tickets` : 'No Tickets'}
-                    </p>
-                  </CardHeader>
-                  <CardContent>
-                    <TicketList
-                      tickets={recentTickets}
-                      onTicketClick={(ticket) => navigate(`/tickets/${ticket.id}`)}
-                      emptyMessage="Submit your first help request to get started."
-                    />
-                  </CardContent>
-                </Card>
+                <div className="bg-muted/30 rounded-lg p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold">My Tickets</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {recentTickets.length > 0 ? `${recentTickets.length} recent tickets` : 'No tickets yet'}
+                      </p>
+                    </div>
+                    {recentTickets.length === 0 && (
+                      <Button onClick={() => navigate('/submit')} size="sm">
+                        Submit First Request
+                      </Button>
+                    )}
+                  </div>
+                  <TicketList
+                    tickets={recentTickets}
+                    onTicketClick={(ticket) => navigate(`/tickets/${ticket.id}`)}
+                    emptyMessage="Submit your first help request to get started."
+                  />
+                </div>
               </CardContent>
             </Card>
           </>
